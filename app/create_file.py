@@ -15,14 +15,13 @@ def main() -> None:
             while i < len(args) and not args[i].startswith("-"):
                 directories.append(args[i])
                 i += 1
-            continue
         elif args[i] == "-f":
             i += 1
             if i < len(args) and not args[i].startswith("-"):
                 file_name = args[i]
                 i += 1
-            continue
-        i += 1
+        else:
+            i += 1
 
     target_dir = os.path.join(*directories) if directories else ""
     if target_dir:
@@ -44,7 +43,7 @@ def main() -> None:
         lines.append(line)
 
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-    formatted_lines = [f"{timestamp}"]
+    formatted_lines = [timestamp]
     for idx, line in enumerate(lines, start=1):
         formatted_lines.append(f"{idx} {line}")
     new_content = "\n".join(formatted_lines) + "\n"
