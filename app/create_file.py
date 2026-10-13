@@ -24,11 +24,9 @@ def main() -> None:
             continue
         i += 1
 
-    if directories:
-        target_dir = os.path.join(*directories)
+    target_dir = os.path.join(*directories) if directories else ""
+    if target_dir:
         os.makedirs(target_dir, exist_ok=True)
-    else:
-        target_dir = ""
 
     if not file_name:
         return
