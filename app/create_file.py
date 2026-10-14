@@ -36,7 +36,7 @@ def create_directories(directories: list[str]) -> str:
 def collect_content() -> str:
     timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     formatted_lines = [timestamp]
-    
+
     idx = 1
     while True:
         try:
@@ -47,15 +47,12 @@ def collect_content() -> str:
             break
         formatted_lines.append(f"{idx} {line}")
         idx += 1
-        
+
     return "\n".join(formatted_lines) + "\n"
 
 
 def write_to_file(file_path: str, content: str) -> None:
-    is_not_empty = os.path.exists(file_path) and os.path.getsize(file_path) > 0
     with open(file_path, "a", encoding="utf-8") as f:
-        if is_not_empty:
-            f.write("\n")
         f.write(content)
 
 
