@@ -38,7 +38,10 @@ def collect_content() -> str:
 
 
 def write_to_file(file_path: str, content: str) -> None:
+    is_not_empty = os.path.exists(file_path) and os.path.getsize(file_path) > 0
     with open(file_path, "a", encoding="utf-8") as f:
+        if is_not_empty:
+            f.write("\n")
         f.write(content)
 
 
