@@ -1,29 +1,15 @@
+import argparse
 import os
-import sys
 from datetime import datetime
 
 
 def parse_arguments() -> tuple[list[str], str | None]:
-    args = sys.argv[1:]
-    directories = []
-    file_name = None
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-d", nargs="*", default=[])
+    parser.add_argument("-f", default=None)
 
-    i = 0
-    while i < len(args):
-        if args[i] == "-d":
-            i += 1
-            while i < len(args) and not args[i].startswith("-"):
-                directories.append(args[i])
-                i += 1
-        elif args[i] == "-f":
-            i += 1
-            if i < len(args) and not args[i].startswith("-"):
-                file_name = args[i]
-                i += 1
-        else:
-            i += 1
-
-    return directories, file_name
+    known_args, _ = parser.parse_known_args()
+    return known_args.d, known_args.f
 
 
 def create_directories(directories: list[str]) -> str:
@@ -63,7 +49,11 @@ def main() -> None:
     if not file_name:
         return
 
-    file_path = os.path.join(target_dir, file_name) if target_dir else file_name
+    if target_dir:
+        file_path = os.path.join(target_dir, file_name)
+    else:
+        file_path = file_name
+
     new_content = collect_content()
     write_to_file(file_path, new_content)
 
